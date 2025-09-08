@@ -16,3 +16,9 @@ class Produit(models.Model):
 
     def __str__(self):
         return self.intituleProd
+    
+class Rayon(models.Model):
+    refRay = models.AutoField(primary_key=True)
+    nomRay = models.CharField(max_length=100)
+    def __str__(self):
+        return self.nomRay
