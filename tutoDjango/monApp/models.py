@@ -8,6 +8,13 @@ class Categorie(models.Model):
     def __str__(self):
         return self.nomCat
 
+class Statut(models.Model):
+    idStatut = models.AutoField(primary_key=True)
+    libelleStatut = models.CharField(max_length=100)
+          
+    def __str__(self):
+        return self.libelleStatus
+
 class Produit(models.Model):
     refProd = models.AutoField(primary_key=True)
     intituleProd = models.CharField(max_length=200)
@@ -15,6 +22,8 @@ class Produit(models.Model):
     date_fabr = models.DateTimeField(default= date.today)
     # Relation CIF : chaque produit appartient à 1 catégorie(0,N côté catégorie -> 1, 1 côté produit)
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name="produits", null=True, blank=True)
+    status = models.ForeignKey(Statut, on_delete=models.CASCADE, related_name="produits_status",null=True, blank=True)
+
 
     def __str__(self):
         return self.intituleProd
@@ -36,9 +45,3 @@ class Contenir(models.Model):
     def __str__(self):
         return f"{self.produit} dans {self.rayon} (Qte: {self.Qte})"
     
-class Statut(models.Model):
-    idStatut = models.AutoField(primary_key=True)
-    libelleStatut = models.CharField(max_length=100)
-          
-    def __str__(self):
-        return self.libelleStatus
