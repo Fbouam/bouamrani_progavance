@@ -22,3 +22,14 @@ class Rayon(models.Model):
     nomRay = models.CharField(max_length=100)
     def __str__(self):
         return self.nomRay
+    
+class Contenir(models.Model):
+    produit = models.ForeignKey(Produit, on_delete=models.CASCADE, related_name="contenir_produit")
+    rayon = models.ForeignKey(Rayon, on_delete=models.CASCADE, related_name="contenir_rayon")
+    Qte = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('produit', 'rayon')
+
+    def __str__(self):
+        return f"{self.produit} dans {self.rayon} (Qte: {self.Qte})"
