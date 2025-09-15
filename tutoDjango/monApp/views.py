@@ -1,17 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, Http404
 from .models import Produit, Categorie, Statut
+from . import models as models_module
 
-def home(request, param='Django'):
-    if request.GET and request.GET["test"]:
+def home(request):
+    if request.GET and request.GET.get("test"):
         raise Http404
     return HttpResponse("Bonjour Monde")
 
 def contactus(request):
-    return HttpResponse('<h1>Contact Us!</h1>')
+    return render(request, 'monApp/contact.html')
 
 def aboutus(request):
-    return HttpResponse('<h1>About Us!</h1>')
+    return render(request, 'monApp/about.html')
 
 def ListProduits(request):
     prdts = Produit.objects.all()
@@ -19,28 +20,16 @@ def ListProduits(request):
 
 def ListCategories(request):
     cats = Categorie.objects.all()
-    if not cats:
-        html = "<h1>Liste des catégories</h1><p>Aucune catégorie trouvée.</p>"
-    else:
-        li_items = "".join([f"<li>{c.nomCat}</li>" for c in cats])
-        html = f"""
-        <h1>Liste des catégories</h1>
-        <ul>
-            {li_items}
-        </ul>
-        """
-    return HttpResponse(html)
+    return render(request, 'monApp/list_categories.html', {'cats': cats})
 
 def ListStatuts(request):
     stats = Statut.objects.all()
-    if not stats:
-        html = "<h1>Liste des statuts</h1><p>Aucun statut trouvé.</p>"
+    return render(request, 'monApp/list_statuts.html', {'stats': stats})
+
+def ListRayons(request):
+    Rayon = getattr(models_module, 'Rayon', None)
+    if Rayon is None:
+        rayons = []
     else:
-        li_items = "".join([f"<li>{s.libelleStatut}</li>" for s in stats])
-        html = f"""
-        <h1>Liste des statuts</h1>
-        <ul>
-            {li_items}
-        </ul>
-        """
-    return HttpResponse(html)
+        rayons = Rayon.objects.all()
+    return render(request, 'monApp/list_rayons.html', {'rayons': rayons})

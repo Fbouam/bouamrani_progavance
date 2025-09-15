@@ -1,0 +1,19 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Liste des statuts - MonApp</title>
+</head>
+<body>
+    <h1>Liste des statuts</h1>
+    {% if stats %}
+        <ul>
+            {% for s in stats %}
+                <li>{{ s.libelleStatut }}</li>
+            {% endfor %}
+        </ul>
+        <p>Nombre de statuts : {{ stats|length }}</p>
+    {% else %}
+        <p>Aucun statut trouvé.</p>
+    {% endif %}
+</body>
+</html>
