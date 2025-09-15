@@ -15,17 +15,7 @@ def aboutus(request):
 
 def ListProduits(request):
     prdts = Produit.objects.all()
-    if not prdts:
-        html = "<h1>Liste des produits</h1><p>Aucun produit trouvé.</p>"
-    else:
-        li_items = "".join([f"<li>{p.intituleProd}</li>" for p in prdts])
-        html = f"""
-        <h1>Liste des produits</h1>
-        <ul>
-            {li_items}
-        </ul>
-        """
-    return HttpResponse(html)
+    return render(request, 'monApp/list_produits.html',{'prdts': prdts})
 
 def ListCategories(request):
     cats = Categorie.objects.all()
