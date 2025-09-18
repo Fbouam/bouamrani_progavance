@@ -1,22 +1,28 @@
 {% extends 'monApp/base.html' %}
+{% block menu %}
+<h1 class="mb-0 text-white">Liste des catégories</h1>
+{% endblock %}
 {% block contenu %}
-<html>
-    <head>
-        <title>Liste des catégories - Mon app DJANGO</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <h1>Liste des catégories</h1>
-        {% if cats %}
-            <ul>
-                {% for c in cats %}
-                    <li>{{ c.nomCat }}</li>
-                {% endfor %}
-            </ul>
-            <p>Nombre de catégories : {{ cats|length }}</p>
-        {% else %}
-            <p>Aucune catégorie trouvée.</p>
-        {% endif %}
-    </body>
-</html>
+<table class="table table-striped table-hover table-bordered table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>Nom catégorie</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in cats %}
+        <tr>
+            <td>{{ c.pk }}</td>
+            <td>{{ c.nomCat }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if not cats %}
+    <div class="alert alert-warning">Aucune catégorie trouvée.</div>
+{% else %}
+    <p>Nombre de catégories : {{ cats|length }}</p>
+{% endif %}
 {% endblock %}
