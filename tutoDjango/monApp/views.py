@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 from .models import Produit, Categorie, Statut
 from . import models as models_module
 
-def home(request):
-    if request.GET and request.GET.get("test"):
+def home(request, param='Django'):
+    if request.GET and request.GET["test"]:
         raise Http404
     return HttpResponse("Bonjour Monde")
 

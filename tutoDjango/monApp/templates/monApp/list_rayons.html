@@ -1,19 +1,22 @@
+{% extends 'monApp/base.html' %}
+{% block contenu %}
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Liste des rayons - MonApp</title>
-</head>
-<body>
-    <h1>Liste des rayons</h1>
-    {% if rayons %}
-        <ul>
-            {% for r in rayons %}
-                <li>{{ r.nomRayon }}</li>
-            {% endfor %}
-        </ul>
-        <p>Nombre de rayons : {{ rayons|length }}</p>
-    {% else %}
-        <p>Aucun rayon trouvé.</p>
-    {% endif %}
-</body>
+    <head>
+        <title>Liste des rayons - Mon app DJANGO</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Liste des rayons</h1>
+        {% if rayons %}
+            <ul>
+                {% for r in rayons %}
+                    <li>{{ r.nom }}</li> {# changez r.nom si votre modèle a un autre champ (ex: r.nomRayon) #}
+                {% endfor %}
+            </ul>
+            <p>Nombre de rayons : {{ rayons|length }}</p>
+        {% else %}
+            <p>Aucun rayon trouvé.</p>
+        {% endif %}
+    </body>
 </html>
+{% endblock %}
