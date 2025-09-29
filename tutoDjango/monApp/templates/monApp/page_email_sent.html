@@ -1,0 +1,8 @@
+{% extends 'monApp/base.html' %}
+{% block contenu %}
+    <div class="align-center col-8 offset-2">
+        <p class="lead mb-3 ml-0">Votre message a bien été envoyé !</p>
+        <hr/>
+        <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+{% endblock %}

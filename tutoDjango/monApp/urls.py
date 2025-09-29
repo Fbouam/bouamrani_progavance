@@ -6,7 +6,7 @@ urlpatterns = [
     #path('', views.home, name='home'),
     #path('home/', views.home, name='home'),
     path('home/<param>/', views.HomeParamView.as_view()),
-    path("contactus/", views.ContactView.as_view()),
+    path("contactus/", views.ContactView),
     #path('contactus', views.contactus, name='contactus'),
     path('aboutus/', views.AboutView.as_view()),
     #path('aboutus', views.aboutus, name='aboutus'),
@@ -24,5 +24,5 @@ urlpatterns = [
     path('login/', views.ConnectView.as_view(), name='login'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('logout/', views.DisconnectView.as_view(), name='logout'),
-    
+    path('email-sent/', views.EmailSentView.as_view(), name='email-sent'),
 ]
