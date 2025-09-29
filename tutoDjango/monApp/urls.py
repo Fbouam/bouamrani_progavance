@@ -1,9 +1,8 @@
-
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("home/", views.HomeView.as_view()),
+    path("home/", views.HomeView.as_view(), name='home'),
     #path('', views.home, name='home'),
     #path('home/', views.home, name='home'),
     path('home/<param>/', views.HomeParamView.as_view()),
@@ -22,6 +21,8 @@ urlpatterns = [
     path("rayon/<pk>/", views.RayonDetailView.as_view(), name="dtl_rayon"),
     path('categories/', views.ListCategories, name='list_categories'),
     path('statut/', views.ListStatuts, name='list_statut'),
-    
+    path('login/', views.ConnectView.as_view(), name='login'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('logout/', views.DisconnectView.as_view(), name='logout'),
     
 ]

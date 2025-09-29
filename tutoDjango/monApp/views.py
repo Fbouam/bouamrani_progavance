@@ -3,6 +3,9 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Produit, Categorie, Statut
 from . import models as models_module
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 class HomeView(TemplateView):
     template_name = "monApp/page_home.html"
@@ -129,6 +132,40 @@ class AboutView(TemplateView):
         return context
 
     def post(self, request, **kwargs):
+        return render(request, self.template_name)
+
+class ConnectView(LoginView):
+    template_name = 'monApp/page_login.html'
+
+    def post(self, request, **kwargs):
+        lgn = request.POST.get('username', False)
+        pswrd = request.POST.get('password', False)
+        user = authenticate(username=lgn, password=pswrd)
+        if user is not None and user.is_active:
+            login(request, user)
+            return render(request, 'monApp/page_home.html', {'param': lgn, 'message': "You're connected"})
+        else:
+            return render(request, 'monApp/page_register.html')
+
+class RegisterView(TemplateView):
+    template_name = 'monApp/page_register.html'
+
+    def post(self, request, **kwargs):
+        username = request.POST.get('username', False)
+        mail = request.POST.get('mail', False)
+        password = request.POST.get('password', False)
+        user = User.objects.create_user(username, mail, password)
+        user.save()
+        if user is not None and user.is_active:
+            return render(request, 'monApp/page_login.html')
+        else:
+            return render(request, 'monApp/page_register.html')
+        
+class DisconnectView(TemplateView):
+    template_name = 'monApp/page_logout.html'
+
+    def get(self, request, **kwargs):
+        logout(request)
         return render(request, self.template_name)
 
 def ListProduits(request):
