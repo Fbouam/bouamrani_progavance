@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Produit, Categorie, Statut
 from . import models as models_module
 
@@ -46,6 +46,66 @@ class ProduitDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProduitDetailView, self).get_context_data(**kwargs)
         context['titremenu'] = "Détail du produit"
+        return context
+    
+class CategorieListView(ListView):
+    model = Categorie
+    template_name = "monApp/list_categories.html"
+    context_object_name = "cats"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Liste des catégories"
+        return context
+
+class CategorieDetailView(DetailView):
+    model = Categorie
+    template_name = "monApp/detail_categorie.html"
+    context_object_name = "cat"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Détail de la catégorie"
+        return context
+
+class StatutListView(ListView):
+    model = Statut
+    template_name = "monApp/list_statuts.html"
+    context_object_name = "stats"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Liste des statuts"
+        return context
+
+class StatutDetailView(DetailView):
+    model = Statut
+    template_name = "monApp/detail_statut.html"
+    context_object_name = "stat"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Détail du statut"
+        return context
+
+class RayonListView(ListView):
+    model = models_module.Rayon
+    template_name = "monApp/list_rayons.html"
+    context_object_name = "rayons"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Liste des rayons"
+        return context
+
+class RayonDetailView(DetailView):
+    model = models_module.Rayon
+    template_name = "monApp/detail_rayon.html"
+    context_object_name = "rayon"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Détail du rayon"
         return context
 
 def contactus(request):
