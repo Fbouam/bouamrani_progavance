@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from .models import Produit, Categorie, Statut
 from . import models as models_module
 from django.contrib.auth.views import LoginView
@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from .forms import ContactUsForm
 from django.core.mail import send_mail
 from django.shortcuts import redirect
+from .forms import *
+from django.forms.models import BaseModelForm
 
 class HomeView(TemplateView):
     template_name = "monApp/page_home.html"
@@ -217,3 +219,12 @@ class EmailSentView(TemplateView):
         context['titreh1'] = "Email Sent"
         context['message'] = "Thank you for contacting us. We will get back to you soon."
         return context
+
+class ProduitCreateView(CreateView):
+    model = Produit
+    form_class = ProduitForm
+    template_name = "monApp/create_produit.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        prdt = form.save()
+        return redirect('dtl-prdt', prdt.refProd)

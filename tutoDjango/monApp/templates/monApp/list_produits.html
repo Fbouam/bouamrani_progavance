@@ -3,6 +3,7 @@
 <h1>{{titremenu}} </h1>
 {% endblock %}
 {% block contenu %}
+
 <table class="table table-striped table-hover table-bordered table-sm">
     <thead class="thead-light">
         <tr>
@@ -39,4 +40,9 @@ J'ai
 {% endif %}
 produits préférés.
 </p>
+
+<p>
+    <a class="btn btn-primary mb-3" href="{% url 'crt-prdt' %}">Créer un nouveau produit</a>
+</p>
+
 {% endblock %}
