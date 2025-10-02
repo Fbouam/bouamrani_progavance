@@ -1,20 +1,22 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1 class="mb-0 text-white">Liste des statuts</h1>
+<h1>{{ titremenu }}</h1>
 {% endblock %}
 {% block contenu %}
 <table class="table table-striped table-hover table-bordered table-sm">
     <thead class="thead-light">
         <tr>
             <th>Id</th>
-            <th>Libellé</th>
+            <th>Nom statut</th>
         </tr>
     </thead>
     <tbody>
     {% for s in stats %}
         <tr>
             <td>{{ s.pk }}</td>
-            <td>{{ s.libelleStatut }}</td>
+            <td>
+                <a href="{% url 'dtl_stat' s.pk %}">{{ s.libelleStatut }}</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

@@ -1,6 +1,6 @@
 from django import forms
+from .models import Produit
 
-from tutoDjango.monApp.models import Produit
 class ContactUsForm(forms.Form):
     name = forms.CharField(required=False)
     email = forms.EmailField()

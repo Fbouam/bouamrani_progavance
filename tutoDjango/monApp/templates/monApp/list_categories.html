@@ -1,6 +1,6 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1 class="mb-0 text-white">Liste des catégories</h1>
+<h1>{{ titremenu }}</h1>
 {% endblock %}
 {% block contenu %}
 <table class="table table-striped table-hover table-bordered table-sm">
@@ -14,7 +14,9 @@
     {% for c in cats %}
         <tr>
             <td>{{ c.pk }}</td>
-            <td>{{ c.nomCat }}</td>
+            <td>
+                <a href="{% url 'dtl_cat' c.pk %}">{{ c.nomCat }}</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

@@ -1,6 +1,6 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1 class="mb-0 text-white">Liste des rayons</h1>
+<h1>{{ titremenu }}</h1>
 {% endblock %}
 {% block contenu %}
 <table class="table table-striped table-hover table-bordered table-sm">
@@ -15,9 +15,7 @@
         <tr>
             <td>{{ r.pk }}</td>
             <td>
-                {% if r.nomRayon %}{{ r.nomRayon }}
-                {% elif r.nom %}{{ r.nom }}
-                {% else %}{{ r }}{% endif %}
+                <a href="{% url 'dtl_rayon' r.pk %}">{{ r.nomRay }}</a>
             </td>
         </tr>
     {% endfor %}
