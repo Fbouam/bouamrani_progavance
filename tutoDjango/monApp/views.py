@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Produit, Categorie, Statut
 from . import models as models_module
 from django.contrib.auth.views import LoginView
@@ -228,6 +229,10 @@ class ProduitCreateView(CreateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         prdt = form.save()
         return redirect('dtl-prdt', prdt.refProd)
+
+def ProduitCreate(request):
+    form = ProduitForm()
+    return render(request, "monApp/create_produit.html", {'form': form})
     
 class ProduitUpdateView(UpdateView):
     model = Produit
@@ -250,3 +255,114 @@ def ProduitUpdate(request, pk):
     else:
         form = ProduitForm(instance=prdt)
     return render(request, 'monApp/update_produit.html', {'form': form})
+
+class ProduitDeleteView(DeleteView):
+    model = Produit
+    template_name = "monApp/delete_produit.html"
+    success_url = reverse_lazy('lst-prdts')
+
+def produit_delete(request, pk):
+    prdt = Produit.objects.get(refProd=pk)  # nécessaire pour GET et pour POST
+    if request.method == 'POST':
+        # supprimer le produit de la base de données
+        prdt.delete()
+        # rediriger vers la liste des produit
+        return redirect('lst-prdts')
+    # pas besoin de « else » ici. Si c'est une demande GET, continuez simplement
+    return render(request, 'monApp/delete_produit.html', {'object': prdt})
+
+class CategorieCreateView(CreateView):
+    model = Categorie
+    form_class = CategorieForm
+    template_name = "monApp/create_categorie.html"
+    success_url = reverse_lazy('lst_cats')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Créer une catégorie"
+        return context
+
+class CategorieUpdateView(UpdateView):
+    model = Categorie
+    form_class = CategorieForm
+    template_name = "monApp/update_categorie.html"
+    success_url = reverse_lazy('lst_cats')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Modifier une catégorie"
+        return context
+
+class CategorieDeleteView(DeleteView):
+    model = Categorie
+    template_name = "monApp/delete_categorie.html"
+    success_url = reverse_lazy('lst_cats')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Supprimer une catégorie"
+        return context
+
+class StatutCreateView(CreateView):
+    model = Statut
+    form_class = StatutForm
+    template_name = "monApp/create_statut.html"
+    success_url = reverse_lazy('lst_stats')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Créer un statut"
+        return context
+
+class StatutUpdateView(UpdateView):
+    model = Statut
+    form_class = StatutForm
+    template_name = "monApp/update_statut.html"
+    success_url = reverse_lazy('lst_stats')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Modifier un statut"
+        return context
+
+class StatutDeleteView(DeleteView):
+    model = Statut
+    template_name = "monApp/delete_statut.html"
+    success_url = reverse_lazy('lst_stats')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Supprimer un statut"
+        return context
+
+class RayonCreateView(CreateView):
+    model = Rayon
+    form_class = RayonForm
+    template_name = "monApp/create_rayon.html"
+    success_url = reverse_lazy('lst_rayons')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Créer un rayon"
+        return context
+
+class RayonUpdateView(UpdateView):
+    model = Rayon
+    form_class = RayonForm
+    template_name = "monApp/update_rayon.html"
+    success_url = reverse_lazy('lst_rayons')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Modifier un rayon"
+        return context
+
+class RayonDeleteView(DeleteView):
+    model = Rayon
+    template_name = "monApp/delete_rayon.html"
+    success_url = reverse_lazy('lst_rayons')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titremenu'] = "Supprimer un rayon"
+        return context

@@ -9,6 +9,8 @@
     <ul>
         <li>ID : {{ stat.pk }}</li>
         <li>Description : {{ stat.description }}</li>
-        <a href="{% url 'lst_stats' %}">Retour à la liste des statuts</a>
+        <li><a href="{% url 'lst_stats' %}">Retour à la liste des statuts</a></li>
+        <li><a href="{% url 'upd_stat' stat.pk %}">Modifier le statut</a></li>
+        <li><a href="{% url 'dlt_stat' stat.pk %}">Supprimer le statut</a></li>
     </ul>
 {% endblock %}

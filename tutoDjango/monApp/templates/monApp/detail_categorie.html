@@ -9,6 +9,8 @@
     <ul>
         <li>ID : {{ cat.pk }}</li>
         <li>Description : {{ cat.description }}</li>
-        <a href="{% url 'lst_cats' %}">Retour à la liste des catégories</a>
+        <li><a href="{% url 'lst_cats' %}">Retour à la liste des catégories</a></li>
+        <li><a href="{% url 'upd_cat' cat.pk %}">Modifier la catégorie</a></li>
+        <li><a href="{% url 'dlt_cat' cat.pk %}">Supprimer la catégorie</a></li>
     </ul>
 {% endblock %}

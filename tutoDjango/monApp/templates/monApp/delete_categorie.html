@@ -1,0 +1,10 @@
+{% extends 'monApp/base.html' %}
+{% block menu %}<h1>{{ titremenu }}</h1>{% endblock %}
+{% block contenu %}
+<form method="post">
+    {% csrf_token %}
+    <p>Voulez-vous vraiment supprimer la catégorie "<strong>{{ object }}</strong>" ?</p>
+    <button class="btn btn-danger" type="submit">Supprimer</button>
+    <a class="btn btn-secondary" href="{% url 'dtl_cat' object.pk %}">Annuler</a>
+</form>
+{% endblock %}

@@ -9,6 +9,8 @@
     <ul>
         <li>ID : {{ rayon.pk }}</li>
         <li>Description : {{ rayon.description }}</li>
-        <a href="{% url 'lst_rayons' %}">Retour à la liste des rayons</a>
+        <li><a href="{% url 'lst_rayons' %}">Retour à la liste des rayons</a></li>
+        <li><a href="{% url 'upd_rayon' rayon.refRay %}">Modifier le rayon</a></li>
+        <li><a href="{% url 'dlt_rayon' rayon.refRay %}">Supprimer le rayon</a></li>
     </ul>
 {% endblock %}
