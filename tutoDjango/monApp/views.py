@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.urls import reverse_lazy
@@ -62,6 +63,10 @@ class CategorieListView(ListView):
     template_name = "monApp/list_categories.html"
     context_object_name = "cats"
 
+    def get_queryset(self):
+        # Annoter chaque catégorie avec le nombre de produits liés
+        return Categorie.objects.annotate(nb_produits=Count('produits'))
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titremenu'] = "Liste des catégories"
@@ -72,15 +77,24 @@ class CategorieDetailView(DetailView):
     template_name = "monApp/detail_categorie.html"
     context_object_name = "cat"
 
+    def get_queryset(self):
+        # Annoter chaque catégorie avec le nombre de produits liés
+        return Categorie.objects.annotate(nb_produits=Count('produits'))
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titremenu'] = "Détail de la catégorie"
+        context['prdts'] = self.object.produits.all()
         return context
 
 class StatutListView(ListView):
     model = Statut
     template_name = "monApp/list_statuts.html"
     context_object_name = "stats"
+
+    def get_queryset(self):
+        # comme pour les catégories : annoter chaque statut avec le nombre de produits liés
+        return Statut.objects.annotate(nb_produits=Count('produits_status'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -95,6 +109,11 @@ class StatutDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titremenu'] = "Détail du statut"
+        # produits associés et comptage (comme pour catégorie)
+        prdts = self.object.produits_status.all()
+        context['prdts'] = prdts
+        context['nb_produits'] = prdts.count()
+        context['stat'].nb_produits = prdts.count()
         return context
 
 class RayonListView(ListView):

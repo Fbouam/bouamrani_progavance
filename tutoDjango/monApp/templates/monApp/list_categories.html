@@ -3,22 +3,30 @@
 <h1>{{ titremenu }}</h1>
 {% endblock %}
 {% block contenu %}
-<table class="table table-striped table-hover table-bordered table-sm">
-    <thead class="thead-light">
+<table class="table">
+    <thead>
         <tr>
             <th>Id</th>
             <th>Nom catégorie</th>
+            <th>Nombre de Produits</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-    {% for c in cats %}
+        {% for cat in cats %}
         <tr>
-            <td>{{ c.pk }}</td>
             <td>
-                <a href="{% url 'dtl_cat' c.pk %}">{{ c.nomCat }}</a>
+                <a href="{% url 'dtl-cat' cat.idCat %}">{{ cat.idCat }}</a>
+            </td>
+            <td>{{ cat.nomCat }}</td>
+            <td>{{ cat.nb_produits|default:0 }}</td>
+            <td>
+                <a href="{% url 'dtl-cat' cat.idCat %}" class="btn btn-primary mt-2">Détails</a>
+                <a href="{% url 'upd-cat' cat.idCat %}" class="btn btn-warning mt-2">Modifier</a>
+                <a href="{% url 'dlt-cat' cat.idCat %}" class="btn btn-danger mt-2">Supprimer</a>
             </td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </tbody>
 </table>
 
